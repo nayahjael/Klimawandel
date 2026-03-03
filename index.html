@@ -25,7 +25,7 @@ header {
 
 button {
     display: block;
-    width: 300px;
+    width: 320px;
     margin: 10px auto;
     padding: 12px;
     font-size: 16px;
@@ -43,7 +43,7 @@ button:hover {
 
 .section {
     display: none;
-    max-width: 800px;
+    max-width: 900px;
     margin: auto;
     text-align: left;
 }
@@ -52,15 +52,13 @@ iframe {
     width: 100%;
     height: 400px;
     border-radius: 10px;
-}
-
-.quiz-question {
-    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .result {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 20px;
+    font-size: 18px;
 }
 </style>
 </head>
@@ -86,9 +84,9 @@ iframe {
 <h2>Ursachen des Klimawandels</h2>
 <iframe src="https://www.youtube.com/embed/dcBXmj1nMTQ" allowfullscreen></iframe>
 <p>
-Der Klimawandel entsteht hauptsächlich durch Treibhausgase wie CO₂.
-Diese entstehen durch Industrie, Verkehr und Energiegewinnung aus fossilen Brennstoffen.
-Dadurch wird die Erde immer wärmer.
+Die globale Durchschnittstemperatur ist seit 1880 um etwa <b>1,1°C</b> gestiegen.
+Hauptursache sind Treibhausgase wie CO₂. Seit der Industrialisierung ist die
+CO₂-Konzentration von etwa <b>280 ppm auf über 420 ppm</b> gestiegen.
 </p>
 <button onclick="goHome()">Zurück</button>
 </div>
@@ -98,9 +96,9 @@ Dadurch wird die Erde immer wärmer.
 <h2>Auswirkung von Verkehr</h2>
 <iframe src="https://www.youtube.com/embed/SK5W9eF2T4Y" allowfullscreen></iframe>
 <p>
-Autos, Flugzeuge und Schiffe stoßen große Mengen CO₂ aus.
-Vor allem Flugverkehr belastet das Klima stark.
-Öffentliche Verkehrsmittel oder Fahrradfahren helfen, Emissionen zu reduzieren.
+Der Verkehrssektor verursacht weltweit etwa <b>20–25 %</b> der CO₂-Emissionen.
+Ein Flug von Europa nach Amerika kann pro Person über <b>1 Tonne CO₂</b> verursachen.
+Fahrrad, Bus und Bahn reduzieren Emissionen deutlich.
 </p>
 <button onclick="goHome()">Zurück</button>
 </div>
@@ -110,8 +108,9 @@ Vor allem Flugverkehr belastet das Klima stark.
 <h2>Industrie & Energie</h2>
 <iframe src="https://www.youtube.com/embed/EtW2rrLHs08" allowfullscreen></iframe>
 <p>
-Kohlekraftwerke und Industrieanlagen produzieren viel CO₂.
-Erneuerbare Energien wie Wind- und Solarenergie sind klimafreundliche Alternativen.
+Die Energieerzeugung aus Kohle, Öl und Gas verursacht rund <b>35 %</b>
+der weltweiten Treibhausgasemissionen.
+Erneuerbare Energien wie Wind und Solar wachsen jedoch jedes Jahr stark.
 </p>
 <button onclick="goHome()">Zurück</button>
 </div>
@@ -121,8 +120,9 @@ Erneuerbare Energien wie Wind- und Solarenergie sind klimafreundliche Alternativ
 <h2>Abholzung</h2>
 <iframe src="https://www.youtube.com/embed/IpVxxxqwBQw" allowfullscreen></iframe>
 <p>
-Wälder speichern CO₂. Wenn sie abgeholzt werden, wird dieses CO₂ freigesetzt.
-Besonders der Regenwald spielt eine wichtige Rolle für das Weltklima.
+Wälder speichern große Mengen CO₂. Jährlich gehen weltweit etwa
+<b>10 Millionen Hektar Wald</b> verloren.
+Das entspricht ungefähr der Fläche von Portugal.
 </p>
 <button onclick="goHome()">Zurück</button>
 </div>
@@ -132,9 +132,10 @@ Besonders der Regenwald spielt eine wichtige Rolle für das Weltklima.
 <h2>Lösungsansätze für zuhause</h2>
 <iframe src="https://www.youtube.com/embed/yiw6_JakZFc" allowfullscreen></iframe>
 <p>
-Du kannst helfen, indem du weniger Fleisch isst, Strom sparst,
-öffentliche Verkehrsmittel nutzt oder regionale Produkte kaufst.
-Jeder kleine Beitrag zählt!
+Schon kleine Veränderungen helfen:
+Weniger Fleisch essen kann den persönlichen CO₂-Ausstoß um mehrere
+hundert Kilogramm pro Jahr senken.
+Auch Strom sparen oder Fahrradfahren reduziert Emissionen deutlich.
 </p>
 <button onclick="goHome()">Zurück</button>
 </div>
@@ -142,32 +143,64 @@ Jeder kleine Beitrag zählt!
 <!-- QUIZ -->
 <div class="section" id="quiz">
 <h2>Wissens-Quiz</h2>
-
-<div class="quiz-question">
-<p>1. Was ist das wichtigste Treibhausgas?</p>
-<button onclick="checkAnswer(this, true)">CO₂</button>
-<button onclick="checkAnswer(this, false)">Sauerstoff</button>
-<button onclick="checkAnswer(this, false)">Stickstoff</button>
-</div>
-
-<div class="quiz-question">
-<p>2. Was hilft gegen den Klimawandel?</p>
-<button onclick="checkAnswer(this, true)">Erneuerbare Energien</button>
-<button onclick="checkAnswer(this, false)">Mehr Kohlekraftwerke</button>
-</div>
-
+<div id="quiz-container"></div>
 <p class="result" id="result"></p>
-
+<button onclick="restartQuiz()">Quiz neu starten</button>
 <button onclick="goHome()">Zurück</button>
 </div>
 
 <script>
+let questions = [
+{
+    question: "Um wie viel Grad ist die Erde seit 1880 wärmer geworden?",
+    answers: ["0,2°C", "1,1°C", "5°C"],
+    correct: 1
+},
+{
+    question: "Wie hoch ist die aktuelle CO₂-Konzentration ungefähr?",
+    answers: ["280 ppm", "350 ppm", "420 ppm"],
+    correct: 2
+},
+{
+    question: "Wie viel Prozent der Emissionen verursacht Verkehr?",
+    answers: ["5%", "20–25%", "50%"],
+    correct: 1
+},
+{
+    question: "Wie viel Prozent verursacht Energie & Industrie?",
+    answers: ["35%", "10%", "2%"],
+    correct: 0
+},
+{
+    question: "Wie viel Wald geht jährlich verloren?",
+    answers: ["1 Million Hektar", "10 Millionen Hektar", "100 Millionen Hektar"],
+    correct: 1
+},
+{
+    question: "Was ist das wichtigste Treibhausgas?",
+    answers: ["CO₂", "Sauerstoff", "Stickstoff"],
+    correct: 0
+},
+{
+    question: "Was reduziert CO₂ im Alltag?",
+    answers: ["Mehr Fleisch essen", "Fahrrad fahren", "Mehr fliegen"],
+    correct: 1
+},
+{
+    question: "Welches Ziel gibt es im Pariser Abkommen?",
+    answers: ["5°C Erwärmung", "Unter 2°C bleiben", "Keine Veränderung"],
+    correct: 1
+}
+];
+
 let score = 0;
+let currentQuestion = 0;
 
 function showSection(id) {
     document.getElementById("home").style.display = "none";
     document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
     document.getElementById(id).style.display = "block";
+    if(id === "quiz") loadQuestion();
 }
 
 function goHome() {
@@ -175,13 +208,48 @@ function goHome() {
     document.querySelectorAll(".section").forEach(sec => sec.style.display = "none");
 }
 
-function checkAnswer(button, correct) {
-    if (correct) {
-        score++;
-        document.getElementById("result").innerText = "Richtig! Punktestand: " + score;
-    } else {
-        document.getElementById("result").innerText = "Falsch! Punktestand: " + score;
+function loadQuestion() {
+    if(currentQuestion >= questions.length) {
+        showResult();
+        return;
     }
+
+    let q = questions[currentQuestion];
+    let html = "<h3>" + q.question + "</h3>";
+    q.answers.forEach((answer, index) => {
+        html += `<button onclick="checkAnswer(${index})">${answer}</button>`;
+    });
+
+    document.getElementById("quiz-container").innerHTML = html;
+}
+
+function checkAnswer(index) {
+    if(index === questions[currentQuestion].correct) {
+        score++;
+    }
+    currentQuestion++;
+    loadQuestion();
+}
+
+function showResult() {
+    let percent = Math.round((score / questions.length) * 100);
+    let message = "";
+
+    if(percent >= 80) message = "🌍 Klimaprofi!";
+    else if(percent >= 50) message = "👍 Gutes Wissen!";
+    else message = "📚 Du kannst noch etwas lernen!";
+
+    document.getElementById("quiz-container").innerHTML = "";
+    document.getElementById("result").innerHTML =
+        "Du hast " + score + " von " + questions.length +
+        " Fragen richtig beantwortet (" + percent + "%).<br>" + message;
+}
+
+function restartQuiz() {
+    score = 0;
+    currentQuestion = 0;
+    document.getElementById("result").innerHTML = "";
+    loadQuestion();
 }
 </script>
 
